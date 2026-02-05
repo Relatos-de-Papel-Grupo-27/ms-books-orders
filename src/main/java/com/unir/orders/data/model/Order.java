@@ -22,6 +22,9 @@ public class Order {
     @Column(name = "account_id", nullable = false)
     private Long accountId;
 
+    @Transient
+    private Long bookId;
+
     @Column(name = "total_amount", nullable = false)
     private BigDecimal totalAmount;
 
