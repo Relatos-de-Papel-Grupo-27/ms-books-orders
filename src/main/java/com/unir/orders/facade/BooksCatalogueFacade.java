@@ -13,11 +13,13 @@ public class BooksCatalogueFacade {
     }
 
     public boolean isBookAvailable(Long bookId) {
-        return webClient
-                .get()
+        Boolean available = webClient.get()
                 .uri("lb://ms-books-catalogue/api/v1/books/{id}/availability", bookId)
                 .retrieve()
                 .bodyToMono(Boolean.class)
+                .onErrorReturn(false)
                 .block();
+
+        return Boolean.TRUE.equals(available);
     }
 }

@@ -6,6 +6,7 @@ import com.unir.orders.controller.model.OrderResponse;
 import com.unir.orders.facade.AccountsFacade;
 import com.unir.orders.facade.BooksCatalogueFacade;
 import com.unir.orders.facade.model.Account;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -14,7 +15,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
-
+@Slf4j
 public class OrderServiceImpl implements OrderService {
 
   private final OrderJpaRepository repository;
@@ -43,10 +44,15 @@ public class OrderServiceImpl implements OrderService {
     return repository.save(order);
   }
 
-  /*@Override
-  public Order createOrder(Order order) {
-    return repository.save(order);
-  }*/
+  @Override
+  public void deleteOrder(Long id) {
+
+    if (!repository.existsById(id)) {
+      throw new RuntimeException("Order not found with id " + id);
+    }
+
+    repository.deleteById(id);
+  }
 
   @Override
   public List<Order> getOrders() {
@@ -70,4 +76,17 @@ public class OrderServiceImpl implements OrderService {
             .account(account)
             .build();
   }
+
+  @Override
+  public Order updateOrder(Long id, Order order) {
+
+    Order existingOrder = repository.findById(id)
+            .orElseThrow(() -> new RuntimeException("Order not found with id " + id));
+
+    existingOrder.setTotalAmount(order.getTotalAmount());
+    existingOrder.setStatus(order.getStatus());
+
+    return repository.save(existingOrder);
+  }
+
 }

@@ -48,4 +48,28 @@ public class OrdersController {
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteOrder(@PathVariable Long id) {
+
+        service.deleteOrder(id);
+
+        return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<OrderResponse> updateOrder(
+        @PathVariable Long id,
+        @RequestBody Order order) {
+
+        Order updatedOrder = service.updateOrder(id, order);
+
+        OrderResponse response = OrderResponse.builder()
+                .totalAmount(updatedOrder.getTotalAmount())
+                .status(updatedOrder.getStatus())
+                .createdAt(updatedOrder.getCreatedAt())
+                .build();
+
+        return ResponseEntity.ok(response);
+    }
+
 }

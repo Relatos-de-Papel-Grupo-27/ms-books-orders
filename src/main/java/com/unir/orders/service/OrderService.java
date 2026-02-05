@@ -6,7 +6,7 @@ import com.unir.orders.controller.model.OrderResponse;
 import java.util.List;
 
 public interface OrderService {
-	
+
 
 	OrderResponse getOrderById(Long id);
 
@@ -14,4 +14,7 @@ public interface OrderService {
 
 	List<Order> getOrders();
 
+	void deleteOrder(Long id);
+
+	Order updateOrder(Long id, Order order);
 }
