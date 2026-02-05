@@ -17,7 +17,7 @@ INSERT INTO orders (account_id, total_amount, status, created_at)
 VALUES (2, 310.75, 'PAID', CURRENT_TIMESTAMP);
 
 INSERT INTO orders (account_id, total_amount, status, created_at)
-VALUES (2, 310.75, 'VALID', CURRENT_TIMESTAMP);
+VALUES (2, 310.75, 'VERIFIED', CURRENT_TIMESTAMP);
 
 INSERT INTO orders (account_id, total_amount, status, created_at)
 VALUES (2, 310.75, 'PAID', CURRENT_TIMESTAMP);
