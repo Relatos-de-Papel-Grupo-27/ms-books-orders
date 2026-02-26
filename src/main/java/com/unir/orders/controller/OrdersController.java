@@ -10,6 +10,7 @@ import com.unir.orders.controller.model.OrderResponse;
 
 import java.util.List;
 
+@CrossOrigin(origins = "http://localhost:5173")
 @RestController
 @Slf4j
 @RequestMapping("/orders")
@@ -53,6 +54,16 @@ public class OrdersController {
 
         service.deleteOrder(id);
 
+        return ResponseEntity.noContent().build();
+    }
+
+    @DeleteMapping("/verified")
+    public ResponseEntity<Void> deleteVerifiedOrder(
+            @RequestParam Long accountId,
+            @RequestParam Long bookId
+    ) {
+
+        service.deleteVerifiedOrder(accountId, bookId);
         return ResponseEntity.noContent().build();
     }
 

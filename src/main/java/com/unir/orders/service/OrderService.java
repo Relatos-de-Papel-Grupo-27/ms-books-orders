@@ -16,5 +16,7 @@ public interface OrderService {
 
 	void deleteOrder(Long id);
 
+	void deleteVerifiedOrder(Long accountId, Long bookId);
+
 	Order updateOrder(Long id, Order order);
 }

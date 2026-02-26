@@ -22,7 +22,7 @@ public class Order {
     @Column(name = "account_id", nullable = false)
     private Long accountId;
 
-    @Transient
+    @Column(name = "book_id", nullable = false)
     private Long bookId;
 
     @Column(name = "total_amount", nullable = false)

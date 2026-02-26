@@ -31,6 +31,22 @@ public class OrderServiceImpl implements OrderService {
   @Override
   public Order createOrder(Order order) {
 
+    var existingOrder = repository.findByAccountIdAndBookIdAndStatus(
+            order.getAccountId(),
+            order.getBookId(),
+            "VERIFIED"
+    );
+
+    if (existingOrder.isPresent()) {
+
+      Order orderToUpdate = existingOrder.get();
+
+      orderToUpdate.setTotalAmount(order.getTotalAmount());
+      orderToUpdate.setCreatedAt(LocalDateTime.now());
+
+      return repository.save(orderToUpdate);
+    }
+
     boolean available =
             booksCatalogueFacade.isBookAvailable(order.getBookId());
 
@@ -52,6 +68,18 @@ public class OrderServiceImpl implements OrderService {
     }
 
     repository.deleteById(id);
+  }
+
+  @Override
+  public void deleteVerifiedOrder(Long accountId, Long bookId) {
+
+    var existingOrder = repository.findByAccountIdAndBookIdAndStatus(
+            accountId,
+            bookId,
+            "VERIFIED"
+    );
+
+    existingOrder.ifPresent(repository::delete);
   }
 
   @Override
